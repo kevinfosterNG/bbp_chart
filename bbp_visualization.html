@@ -1,0 +1,81 @@
+<html>
+<head><title>BBP Schedule</title>
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization', 'version':'1','packages':['timeline']}]}"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API and the controls package.
+  // Packages for all the other charts you need will be loaded
+  // automatically by the system.
+  google.load('visualization', '1.0', {'packages':['controls']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawDashboard);
+
+  function drawDashboard() {
+  // Everything is loaded. Assemble your dashboard...
+  var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
+  
+  var container = document.getElementById('chart_div');
+  var chart = new google.visualization.Timeline(container);
+  
+  var dataTable = new google.visualization.DataTable();
+  dataTable.addColumn({ type: 'string', id: 'Server' });
+  dataTable.addColumn({ type: 'string', id: 'Package Name' });
+  dataTable.addColumn({ type: 'date', id: 'Start', label: 'start_datetime' });
+  dataTable.addColumn({ type: 'date', id: 'End' });
+  dataTable.addRows([
+<!-----------------------------------------------------------------------TOP OF DATA----------------------------------------------------------------------->
+['BBP01','Batches BBP VA', new Date(	2015	,	2	,	1	,	23	,	15	,	2	,	0	), new Date(	2015	,	2	,	1	,	23	,	30	,	4	,	0	)],
+['BBP01','Batches BBP KS', new Date(	2015	,	2	,	1	,	23	,	45	,	6	,	0	), new Date(	2015	,	2	,	1	,	23	,	55	,	8	,	0	)],
+['BBP01','Batches BBP MO', new Date(	2015	,	2	,	1	,	22	,	45	,	6	,	0	), new Date(	2015	,	2	,	1	,	23	,	00	,	8	,	0	)],
+['BBP01','Batches BBP Tulsa', new Date(	2015	,	2	,	1	,	22	,	30	,	8	,	0	), new Date(	2015	,	2	,	1	,	22	,	45	,	10	,	0	)],
+['BBP01','Batches BBP OH', new Date(	2015	,	2	,	1	,	22	,	15	,	20	,	0	), new Date(	2015	,	2	,	1	,	22	,	30	,	22	,	0	)],
+['BBP01','Batches BBP VA', new Date(	2015	,	2	,	1	,	22	,	0	,	41	,	0	), new Date(	2015	,	2	,	1	,	22	,	15	,	44	,	0	)],
+['BBP01','Batches BBP AZ', new Date(	2015	,	2	,	1	,	21	,	45	,	52	,	0	), new Date(	2015	,	2	,	1	,	22	,	0	,	55	,	0	)],
+['BBP01','Batches BBP GA', new Date(	2015	,	2	,	1	,	23	,	00	,	52	,	0	), new Date(	2015	,	2	,	1	,	23	,	15	,	01	,	0	)]	
+<!----------------------------------------------------------------------BOTTOM OF DATA---------------------------------------------------------------------->
+  ]);
+
+
+// Create a range slider, passing some options
+// Create a range slider, passing some options
+        var dateRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'DateRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'start_datetime'
+          }
+        });
+
+        // Create a pie chart, passing some options
+        var timeline = new google.visualization.ChartWrapper({
+          'chartType': 'Timeline',
+          'containerId': 'chart_div',
+          'options': {
+			timeline: { colorByRowLabel: true, groupByRowLabel: true },
+			backgroundColor: '#ffd'
+		  }
+        });
+
+        // Establish dependencies, declaring that 'filter' drives 'timeline',
+        // so that the pie chart will only display entries that are let through
+        // given the chosen slider range.
+        dashboard.bind(dateRangeSlider, timeline);
+
+        // Draw the dashboard.
+        dashboard.draw(dataTable);
+}
+</script>
+
+<head>
+  <body>
+    <!--Div that will hold the dashboard-->
+    <div id="dashboard_div">
+      <!--Divs that will hold each control and chart-->
+      <div id="filter_div"></div>
+      <div id="chart_div" height='800px'></div>
+    </div>
+  </body>
+</html>
