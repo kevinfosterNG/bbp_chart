@@ -1,4 +1,8 @@
-# bbp_chart
+# NextGen application version 5.8.3 (UD3)
+As of this version, the software includes an enhancement that renders this external process unnecessary.  
+:+1:
+
+## bbp_chart
 NextGen BBP Schedule Visualization
 
 1) Open google_dataTable_lookup.sql and set date filters as desired 
